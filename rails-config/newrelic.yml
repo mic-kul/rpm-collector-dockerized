@@ -1,0 +1,35 @@
+common: &default_settings
+  app_name: sampleapp
+  license_key: 'aaaaaaaaaaaaaaaaaaaaaaaa0000000000000000'
+  monitor_mode: true
+  developer_mode: false
+  log_level: info
+  apdex_t: 0.5
+  capture_params: true
+
+  transaction_tracer:
+    enabled: true
+    record_sql: raw
+    slow_sql: raw
+    stack_trace_threshold: 0.5
+    transaction_threshold: 1.0
+
+  error_collector:
+    enabled: true
+    capture_source: true
+    ignore_errors: ActionController::RoutingError
+
+development:
+  <<: *default_settings
+  monitor_mode: true
+  developer_mode: true
+  app_name: sampleapp (dev)
+  host: localhost
+  port: 4567
+  api_host: localhost
+  api_port: 4567
+  ssl: false
+
+test:
+  <<: *default_settings
+  monitor_mode: false

@@ -1,0 +1,2 @@
+storage/grafana/data/*
+storage/influxdb/data/*
