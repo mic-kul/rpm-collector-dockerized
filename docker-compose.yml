@@ -1,0 +1,36 @@
+version: "3.3"
+services:
+  collector:
+    container_name: collector
+    environment:
+      - INFLUXDB_HOST=influxdb
+      - RACK_ENV=production
+    ports:
+      - "4567:4567"
+    build:
+      context: ./collector
+    links:
+      - influxdb
+    depends_on:
+      - influxdb
+
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DATA_ENGINE=tsm1
+      - INFLUXDB_REPORTING_DISABLED=false
+    volumes:
+      - ./storage/influxdb/data:/var/lib/influxdb
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    links:
+      - influxdb
+    volumes:
+      - ./storage/grafana/data:/var/lib/grafana
